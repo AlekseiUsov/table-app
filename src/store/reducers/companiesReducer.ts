@@ -14,6 +14,7 @@ import {
   getCompanyWorkers,
 } from "../../utils/store";
 import { changeItemInputValue } from "../../utils/store/changeItemInput";
+import { tableRowsAdapter } from "../../utils/table";
 
 interface IState {
   companies: Array<IRowId & IRowValues>;
@@ -70,7 +71,11 @@ export const companiesSlice = createSlice({
     },
     setWorkers(state) {
       const { workers } = getCompanyWorkers(current(state.companies));
-      state.workers = workers;
+      if (workers && workers[0].values) {
+        state.workers = workers;
+      } else {
+        state.workers = workers && tableRowsAdapter(workers);
+      }
     },
     deleteWorker(state) {
       const { id } = getCompanyWorkers(current(state.companies));

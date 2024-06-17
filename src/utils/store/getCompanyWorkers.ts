@@ -1,7 +1,5 @@
 // types
 import { IRowId, IRowValues } from "../../types/common";
-// utils
-import { tableRowsAdapter } from "../table";
 
 export const getCompanyWorkers = (companies: Array<IRowId & IRowValues>) => {
   const checkedCompanies = companies.filter((company) => company.checked);
@@ -12,7 +10,7 @@ export const getCompanyWorkers = (companies: Array<IRowId & IRowValues>) => {
     for (const value of values) {
       const current = Object.values(value)[0];
       if (Array.isArray(current)) {
-        return { id: companyId, workers: tableRowsAdapter(current) };
+        return { id: companyId, workers: current };
       }
     }
   }
