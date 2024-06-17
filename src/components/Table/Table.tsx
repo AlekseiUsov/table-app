@@ -45,6 +45,7 @@ export const Table: FC<IProps> = ({
 }) => {
   const location = useLocation();
   const selectedAll = data.every((el) => el.checked);
+  // TODO сделать чтобы если содержимое даты больше колонок, то данные для колонок обрезались
 
   return (
     <div className={styles.wrapper}>
