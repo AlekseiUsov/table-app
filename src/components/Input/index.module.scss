@@ -1,0 +1,35 @@
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.input {
+  font-weight: 500;
+}
+
+.primary {
+  padding: 5px;
+  border: 1px solid var(--light-blue);
+  border-radius: 5px;
+  outline: none;
+}
+
+.primary:focus {
+  border: 1px solid var(--blue);
+}
+
+.secondary {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.secondary:focus {
+  border: none;
+  color: var(--blue);
+}
