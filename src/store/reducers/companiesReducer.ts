@@ -17,11 +17,13 @@ import { changeItemInputValue } from "../../utils/store/changeItemInput";
 import { tableRowsAdapter } from "../../utils/table";
 
 interface IState {
+  companyId: string | null;
   companies: Array<IRowId & IRowValues>;
   workers: Array<IRowId & IRowValues> | null;
 }
 
 const initialState: IState = {
+  companyId: null,
   companies: mokData,
   workers: null,
 };
@@ -42,12 +44,20 @@ export const companiesSlice = createSlice({
         newValue
       );
       if (state.workers) {
-        state.workers = changeItemInputValue(
+        const newWorkers = changeItemInputValue(
           current(state.workers),
           id,
           name[0],
           newValue
         );
+        if (state.companyId) {
+          state.companies = changeCompanyWorkers(
+            state.companyId,
+            newWorkers,
+            state.companies
+          );
+          state.workers = newWorkers;
+        }
       }
     },
     changeWorkersCheckboxesValue(state, action: PayloadAction<string>) {
@@ -70,11 +80,14 @@ export const companiesSlice = createSlice({
       state.workers = null;
     },
     setWorkers(state) {
-      const { workers } = getCompanyWorkers(current(state.companies));
+      const { id, workers } = getCompanyWorkers(current(state.companies));
       if (workers && workers[0].values) {
         state.workers = workers;
+        state.companyId = id;
+        current;
       } else {
         state.workers = workers && tableRowsAdapter(workers);
+        state.companyId = id;
       }
     },
     deleteWorker(state) {
