@@ -37,13 +37,14 @@ export const companiesSlice = createSlice({
     },
     changeInputsValue(state, action: PayloadAction<{ [k: string]: string }>) {
       const { id, name, newValue } = action.payload;
-      state.companies = changeItemInputValue(
-        current(state.companies),
-        id,
-        name[0],
-        newValue
-      );
-      if (state.workers) {
+      if (!state.workers) {
+        state.companies = changeItemInputValue(
+          current(state.companies),
+          id,
+          name[0],
+          newValue
+        );
+      } else {
         const newWorkers = changeItemInputValue(
           current(state.workers),
           id,
